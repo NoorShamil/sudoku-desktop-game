@@ -1,8 +1,14 @@
 package models;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -189,12 +195,12 @@ public class SudokuBoardTest {
     }
 
     // private static void printBoard(SudokuBoard board) {
-    //     for (int i = 0; i < SudokuBoard.BOARD_SIZE; i++) {
-    //         for (int j = 0; j < SudokuBoard.BOARD_SIZE; j++) {
-    //             System.out.print(board.getField(j, i).getValue() + " ");
-    //         }
-    //         System.out.println();
-    //     }
+    // for (int i = 0; i < SudokuBoard.BOARD_SIZE; i++) {
+    // for (int j = 0; j < SudokuBoard.BOARD_SIZE; j++) {
+    // System.out.print(board.getField(j, i).getValue() + " ");
+    // }
+    // System.out.println();
+    // }
     // }
 
     @Test
@@ -257,5 +263,13 @@ public class SudokuBoardTest {
 
         assertFalse(sudokuBoard.equals(clonedBoard));
         assertNotEquals(sudokuBoard.hashCode(), clonedBoard.hashCode());
+    }
+
+    @Test
+    void testSetFieldMaintainsBoardValidity() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.setField(0, 0, 5);
+        board.setField(1, 0, 5);
+        assertFalse(board.isValidSudoku());
     }
 }
